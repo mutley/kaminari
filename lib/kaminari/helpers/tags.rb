@@ -28,7 +28,11 @@ module Kaminari
       end
 
       def page_url_for(page)
-        @template.url_for params_for(page).merge(:only_path => true)
+        if @options.has_key?(:route_scope)
+          @template.send(@options[:route_scope]).url_for params_for(page).merge(:only_path => true)
+        else
+          @template.url_for params_for(page).merge(:only_path => true)
+        end
       end
 
       private
